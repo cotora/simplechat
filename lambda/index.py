@@ -115,8 +115,15 @@ def lambda_handler(event, context):
 
         url = "https://443b-35-204-138-157.ngrok-free.app/generate"
 
+        prompt = ""
+        for msg in messages:
+            if msg["role"] == "user":
+                prompt += "user: " + msg["content"] + "\n"
+            elif msg["role"] == "assistant":
+                prompt += "assistant: " + msg["content"] + "\n"
+
         req_body = {
-            "prompt": message,
+            "prompt": prompt,
             "max_new_token": 512,
             "do_sample": True,
             "temperature": 0.7,
